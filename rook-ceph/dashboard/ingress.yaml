@@ -3,19 +3,10 @@ kind: Ingress
 metadata:
   name: rook-ceph-mgr-dashboard
   namespace: rook-ceph
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 100.64.0.0/10"
-#    kubernetes.io/tls-acme: "true"
-#    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#    nginx.ingress.kubernetes.io/server-snippet: |
-#      proxy_ssl_verify off;
 spec:
-  tls:
-   - hosts:
-     - rook.eviljungle.com
+  ingressClassName: nginx-tailscale
   rules:
-  - host: rook.eviljungle.com
+  - host: &host rook.eviljungle.com
     http:
       paths:
       - path: /
@@ -25,3 +16,6 @@ spec:
             name: rook-ceph-mgr-dashboard
             port:
               number: 7000
+  tls:
+  - hosts:
+    - *host

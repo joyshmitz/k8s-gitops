@@ -29,7 +29,7 @@ spec:
   values:
     image:
       repository: espresense/espresense-companion
-      tag: "0.6.4"
+      tag: "1.0.15"
     env:
       TZ: "America/New_York"
       CONFIG_DIR: "/config"
@@ -50,17 +50,14 @@ spec:
     ingress:
       main:
         enabled: true
-        annotations:
-          nginx.ingress.kubernetes.io/auth-url: "https://auth.eviljungle.com/oauth2/auth"
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.eviljungle.com/oauth2/start
-        ingressClassName: "nginx"
+        ingressClassName: nginx-tailscale
         hosts:
-          - host: "espresense-companion.eviljungle.com"
+          - host: &host espresense-companion.eviljungle.com
             paths:
               - path: /
         tls:
           - hosts:
-              - espresense-companion.eviljungle.com
+              - *host
     resources:
       requests:
         memory: 250Mi

@@ -8,7 +8,6 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://helm.influxdata.com/
       chart: influxdb
       version: 4.12.5
       sourceRef:
@@ -19,7 +18,7 @@ spec:
   values:
     image:
       repository: "influxdb"
-      tag: "1.8.10"
+      tag: "1.8.10-alpine"
     service:
       type: LoadBalancer
     persistence:
@@ -54,6 +53,3 @@ spec:
         templates:
         - "*.app env.service.resource.measurement"
         - "servers.* .host.resource.measurement.field*"
-    tolerations:
-    - key: "arm"
-      operator: "Exists"

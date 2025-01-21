@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: metallb
-      version: 0.14.3
+      version: 0.14.9
       sourceRef:
         kind: HelmRepository
         name: metallb-charts
@@ -35,15 +35,7 @@ spec:
         enabled: true
       prometheusRule:
         enabled: true
-    controller:
-      tolerations:
-      - key: "arm"
-        operator: "Exists"
     speaker:
       tolerations:
-      - key: "arm"
-        operator: "Exists"
-      - key: "armhf"
-        operator: "Exists"
       - key: "node-role.kubernetes.io/master"
         operator: "Exists"

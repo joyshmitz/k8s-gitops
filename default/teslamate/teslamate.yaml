@@ -29,13 +29,13 @@ spec:
   values:
     initContainers:
       init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
+        image: ghcr.io/onedr0p/postgres-init:15.5@sha256:70b4c228f2e86de39008a35211c76c1ac6de1dcdf0e908ac09ede6a11e2344e2
         envFrom:
           - secretRef:
               name: teslamate-secret
     image:
       repository: teslamate/teslamate
-      tag: "1.28.3"
+      tag: "1.32.0"
     env:
       TZ: "America/New_York"
       DISABLE_MQTT: "false"
@@ -53,20 +53,14 @@ spec:
     ingress:
       main:
         enabled: true
-        annotations:
-          nginx.ingress.kubernetes.io/auth-url: "https://auth.eviljungle.com/oauth2/auth"
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.eviljungle.com/oauth2/start
-        ingressClassName: "nginx"
+        ingressClassName: nginx-tailscale
         hosts:
-          - host: "teslamate.eviljungle.com"
+          - host: &host teslamate.eviljungle.com
             paths:
               - path: /
         tls:
           - hosts:
-              - teslamate.eviljungle.com
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
+              - *host
     resources:
       requests:
         memory: 250Mi

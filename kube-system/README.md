@@ -55,18 +55,6 @@ Using the USB feature of [node-feature-discovery](https://github.com/kubernetes-
 
 * [node-feature-discovery](node-feature-discovery/)
 
-# oauth2-proxy
-
-[OAuth2 authenticating proxy](https://github.com/pusher/oauth2_proxy) leveraging Auth0
-
-* [oauth2-proxy/](oauth2-proxy/)
-
-# registry-creds
-
-[registry-creds](https://github.com/alexellis/registry-creds): Automate Kubernetes registry credentials, to extend Docker Hub limits.  This is (sadly) necessary to have cluster-wide imagePulls use an authenticated Docker account so that the cluster doesn't get rate-limited and become unable to schedule workloads. This has already happened once.
-
-* [registry-creds/](registry-creds)
-
 # reloader
 
 [reloader](https://github.com/stakater/Reloader): A Kubernetes controller to watch changes in ConfigMap and Secrets and do rolling upgrades on Pods with their associated Deployment, StatefulSet, DaemonSet and DeploymentConfig

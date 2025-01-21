@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/radarr
-      tag: 5.2.6.8376
+      tag: 5.17.2.9580
 
     env:
       TZ: "America/New_York"
@@ -45,8 +45,12 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: 'nginx'
+        ingressClassName: nginx-tailscale
         hosts:
+          - host: radarr.eviljungle.com
+            paths:
+              - path: /
+                pathType: Prefix
           - host: movies.eviljungle.com
             paths:
               - path: /
@@ -76,7 +80,3 @@ spec:
         cpu: 25m
       limits:
         memory: 500Mi
-
-    tolerations:
-    - key: "arm"
-      operator: "Exists"

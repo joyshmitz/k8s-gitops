@@ -8,9 +8,8 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.rook.io/release
       chart: rook-ceph
-      version: v1.13.3
+      version: v1.15.8
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
@@ -25,8 +24,6 @@ spec:
       enableGrpcMetrics: true
       enableCSIHostNetwork: true
       pluginTolerations:
-        - key: "arm"
-          operator: "Exists"
         - key: "node-role.kubernetes.io/master"
           operator: "Exists"
     resources:

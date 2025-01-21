@@ -8,9 +8,8 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://coredns.github.io/helm
       chart: coredns
-      version: 1.29.0
+      version: 1.37.1
       sourceRef:
         kind: HelmRepository
         name: coredns-charts
@@ -39,9 +38,6 @@ spec:
               values:
               - coredns
           topologyKey: "kubernetes.io/hostname"
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
     rbac:
       create: true
     isClusterService: false
@@ -57,12 +53,6 @@ spec:
         configBlock: |-
           lameduck 5s
       - name: ready
-      # - name: kubernetes
-      #   parameters: cluster.local in-addr.arpa ip6.arpa
-      #   configBlock: |-
-      #     pods insecure
-      #     fallthrough in-addr.arpa ip6.arpa
-      #     ttl 30
       - name: prometheus
         parameters: 0.0.0.0:9153
       - name: forward
@@ -78,8 +68,11 @@ spec:
      - filename: eviljungle.com
        domain: eviljungle.com
        contents: |
-         eviljungle.com.   IN SOA etta.ns.cloudflare.com. dns.cloudflare.com. 2020100600 10000 2400 604800 3600
-         mc.eviljungle.com. IN A   10.0.6.106
-         *.t.eviljungle.com. IN A 100.108.157.55
-         *.eviljungle.com. IN A   10.0.6.150
-         eviljungle.com. IN A   10.0.7.1
+        eviljungle.com.   IN SOA etta.ns.cloudflare.com. dns.cloudflare.com. 2020100600 10000 2400 604800 3600
+        mc.eviljungle.com. IN A   10.0.6.106
+        plex.eviljungle.com. IN A   10.0.6.150
+        hass.eviljungle.com. IN A   10.0.6.150
+        request.eviljungle.com. IN A   10.0.6.150
+        *.t.eviljungle.com. IN CNAME nginx-tailscale.drake-eel.ts.net
+        *.eviljungle.com. IN A   100.85.172.52
+        eviljungle.com. IN A   10.0.7.1

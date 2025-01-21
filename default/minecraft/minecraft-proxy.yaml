@@ -8,9 +8,8 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://itzg.github.io/minecraft-server-charts/
       chart: minecraft-proxy
-      version: 3.5.0
+      version: 3.8.3
       sourceRef:
         kind: HelmRepository
         name: minecraft-server-charts
@@ -19,7 +18,7 @@ spec:
   values:
     image:
       repository: itzg/bungeecord
-      tag: 2023.11.0
+      tag: 2025.1.0
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
@@ -31,17 +30,14 @@ spec:
         cpu: 50m
       limits:
         memory: 500Mi
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
     podAnnotations:
       configmap.reloader.stakater.com/reload: "waterfall-minecraft-proxy-config"
     extraEnv:
-      SPIGET_PLUGINS: "78915,75"
+      SPIGET_PLUGINS: "78915"
     minecraftProxy:
       type: WATERFALL
-      # A list of .jar URLs to download into the plugins folder.
-      # plugins: []
+      plugins:
+        - https://github.com/Army-py/SlashServer/releases/download/tested/SlashServer-4.0.jar
       serviceType: LoadBalancer
       loadBalancerIP: 10.0.6.106
       externalTrafficPolicy: Local

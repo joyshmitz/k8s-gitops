@@ -9,18 +9,18 @@ jobs:
   helm-releases:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       with:
         token: ${{ secrets.PAT }}
         fetch-depth: 1
 
     - name: Install yq
       run: |
-        sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.0/yq_linux_amd64
+        sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64
         sudo chmod +x /usr/local/bin/yq
 
     - name: Create pull request for HelmRelease annotations
-      uses: peter-evans/create-pull-request@b1ddad2c994a25fbc81a28b3ec0e368bb2021c50 # v6
+      uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: helm-release-annotations

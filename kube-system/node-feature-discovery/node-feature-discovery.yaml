@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: node-feature-discovery
-      version: 0.15.1
+      version: 0.17.1
       sourceRef:
         kind: HelmRepository
         name: kubernetes-sigs-nfd-charts
@@ -45,7 +45,17 @@ spec:
           operator: "Exists"
         - effect: "NoSchedule"
           operator: "Exists"
+      resources:
+        limits:
+          cpu: null
     master:
       tolerations:
         - key: arm
           operator: Exists
+      resources:
+        limits:
+          cpu: null
+    gc:
+      resources:
+        limits:
+          cpu: null
