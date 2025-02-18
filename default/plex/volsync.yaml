@@ -30,12 +30,12 @@ metadata:
 spec:
   sourcePVC: plex-config
   trigger:
-    schedule: "0 6 * * *"
+    schedule: "40 5 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
     repository: plex-restic-secret
-    cacheCapacity: 55Gi
+    cacheCapacity: 65Gi
     volumeSnapshotClassName: csi-rbdplugin-snapclass
     storageClassName: rook-ceph-block
     moverSecurityContext:

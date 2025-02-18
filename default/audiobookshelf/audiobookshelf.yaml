@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/advplyr/audiobookshelf
-      tag: 2.7.2
+      tag: 2.19.3
 
     env:
       TZ: "America/New_York"
@@ -46,15 +46,30 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: 'nginx'
+        # ensure that external DNS (cloudflare) has an entry for this directed to the router
+        # ensure that internal DNS for this zone (coredns) has an entry for this directed to nginx LB IP
+        ingressClassName: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/custom-http-errors: "400,404,500,502,503,504"  # Using a smaller set than the default to fix javascript issues with overseer
         hosts:
-          - host: audiobookshelf.eviljungle.com
+          - host: &host abs.eviljungle.com
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-            - "audiobookshelf.eviljungle.com"
+            - *host
+      tailscale:
+        enabled: true
+        ingressClassName: nginx-tailscale
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
 
     persistence:
       config:
@@ -82,7 +97,3 @@ spec:
         cpu: 50m
       limits:
         memory: 500Mi
-
-    tolerations:
-    - key: "arm"
-      operator: "Exists"

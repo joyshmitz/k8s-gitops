@@ -17,8 +17,8 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/miguelndecarvalho/speedtest-exporter
-      tag: v3.5.4
+      repository: ghcr.io/lpicanco/prometheus-speedtest-exporter
+      tag: 0.2.2
     service:
       main:
         ports:
@@ -27,7 +27,7 @@ spec:
           metrics:
             enabled: true
             protocol: TCP
-            port: 9798
+            port: 9516
     serviceMonitor:
       main:
         enabled: true
@@ -36,6 +36,3 @@ spec:
             path: /metrics
             interval: 60m
             scrapeTimeout: 1m
-    tolerations:
-    - key: "arm"
-      operator: "Exists"

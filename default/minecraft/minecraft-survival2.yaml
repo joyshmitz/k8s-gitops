@@ -9,9 +9,8 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://itzg.github.io/minecraft-server-charts/
       chart: minecraft
-      version: 4.14.0
+      version: 4.23.7
       sourceRef:
         kind: HelmRepository
         name: minecraft-server-charts
@@ -19,8 +18,8 @@ spec:
       interval: 5m
   values:
     image:
-      repository: itzg/minecraft-server
-      tag: 2024.2.0-java17
+      repository: ghcr.io/itzg/minecraft-server
+      tag: 2025.2.0
     strategyType: Recreate
     persistence:
       storageClass: "rook-ceph-block"
@@ -43,13 +42,15 @@ spec:
     extraEnv:
       ENABLE_AUTOPAUSE: FALSE
     minecraftServer:
+      modUrls:
+        - https://cdn.modrinth.com/data/hXiIvTyT/versions/puUfqBpY/EssentialsX-2.20.1.jar
+        - https://cdn.modrinth.com/data/Lu3KuzdV/versions/llmrc4cl/CoreProtect-22.4.jar
       spigetResources:
         - 28140
         - 74354
         - 102931
-      modUrls:
-        - https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsX-2.20.0.jar
-        - https://cdn.modrinth.com/data/Lu3KuzdV/versions/mvLpRWww/CoreProtect-21.3.jar
+        - 83557 # bluemap
+        - 4441 # hibernate
       eula: "TRUE"
       version: "LATEST"
       type: PAPER
@@ -73,22 +74,20 @@ spec:
         serviceType: LoadBalancer
       extraPorts:
         - name: map
-          containerPort: 8123
+          containerPort: 8100
           service:
             enabled: true
             type: ClusterIP
-            port: 8123
+            port: 8100
           ingress:
             enabled: true
-            annotations:
-              kubernetes.io/ingress.class: nginx
-              nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16"
+            ingressClassName: nginx-tailscale
             hosts:
               - name: mcsv2-map.eviljungle.com
                 path: /
             tls:
             - hosts:
-              - mcsv2.eviljungle.com
+              - mcsv2-map.eviljungle.com
 ---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
@@ -121,7 +120,7 @@ metadata:
 spec:
   sourcePVC: mcsv2-minecraft-datadir
   trigger:
-    schedule: "0 6 * * *"
+    schedule: "30 4 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10

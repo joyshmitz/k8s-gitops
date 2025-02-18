@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/prowlarr-develop
-      tag: 1.13.0.4217
+      tag: 1.31.1.4959
 
     env:
       TZ: "America/New_York"
@@ -61,15 +61,15 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: nginx-tailscale
         hosts:
-          - host: "prowlarr.eviljungle.com"
+          - host: &host prowlarr.eviljungle.com
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "prowlarr.eviljungle.com"
+              - *host
 
     podSecurityContext:
       runAsUser: 1001
@@ -92,7 +92,3 @@ spec:
         cpu: 100m
       limits:
         memory: 500Mi
-
-    tolerations:
-    - key: "arm"
-      operator: "Exists"

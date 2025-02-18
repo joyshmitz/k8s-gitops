@@ -23,16 +23,14 @@ spec:
       shared_buffers: 512MB
   monitoring:
     enablePodMonitor: true
+  # https://github.com/cloudnative-pg/cloudnative-pg/issues/2570
+  enablePDB: false
   resources:
     requests:
       memory: "512Mi"
       cpu: "250m"
     limits:
       memory: "4Gi"
-  affinity:
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
@@ -40,7 +38,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgresql/
-      endpointURL: http://minio.default:9000
+      endpointURL: http://nas.home:9000
       serverName: postgres-v15
       s3Credentials:
         accessKeyId:
@@ -74,7 +72,7 @@ spec:
           compression: bzip2
           maxParallel: 8
         destinationPath: s3://postgresql/
-        endpointURL: http://minio.default:9000
+        endpointURL: http://nas.home:9000
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg-secret

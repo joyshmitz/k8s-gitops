@@ -14,7 +14,6 @@
 
 * [espresense-companion.yaml](espresense-companion/espresense-companion.yaml)
 
-
 # frigate
 
 ![](https://i.imgur.com/hv7bh6m.png)
@@ -22,14 +21,6 @@
 Installs [frigate](https://github.com/blakeblackshear/frigate/): Realtime object detection on RTSP cameras with the Google Coral
 
 * [frigate.yaml](frigate/frigate.yaml)
-
-# goldilocks
-
-![](https://i.imgur.com/500FwQp.png)
-
-Installs [goldilocks](https://github.com/FairwindsOps/goldilocks): to help with resource allocation selection
-
-* [goldilocks.yaml](goldilocks/goldilocks.yaml)
 
 # home-assistant
 
@@ -49,16 +40,6 @@ Using the [minecraft server](https://hub.docker.com/r/itzg/minecraft-server) con
 * [minecraft-creative.yaml](minecraft/minecraft-creative.yaml)
 * [minecraft-survival.yaml](minecraft/minecraft-survival.yaml)
 * [minecraft-bedrock.yaml](minecraft/minecraft-bedrock.yaml)
-
-# minio
-
-[Minio](https://github.com/minio/minio) is a high performance S3-compatible kubernetes object storage solution.
-
-![](https://i.imgur.com/RF0aYAg.png)
-
-S3-compatible bucket storage service
-
-* [minio.yaml](minio/minio.yaml)
 
 # node-red
 

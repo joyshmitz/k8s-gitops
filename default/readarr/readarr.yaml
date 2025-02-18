@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/readarr-develop
-      tag: 0.3.17.2409
+      tag: 0.3.32.2587
 
     env:
       TZ: "America/New_York"
@@ -42,15 +42,15 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: nginx-tailscale
         hosts:
-          - host: readarr.eviljungle.com
+          - host: &host readarr.eviljungle.com
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - readarr.eviljungle.com
+              - *host
 
     persistence:
       config:
@@ -72,7 +72,3 @@ spec:
         cpu: 25m
       limits:
         memory: 2000Mi
-
-    tolerations:
-    - key: "arm"
-      operator: "Exists"

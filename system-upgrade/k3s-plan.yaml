@@ -1,34 +1,3 @@
-# Server plan
-apiVersion: upgrade.cattle.io/v1
-kind: Plan
-metadata:
-  name: k3s-server
-  namespace: system-upgrade
-spec:
-  concurrency: 1
-  cordon: true
-  nodeSelector:
-    matchExpressions:
-    - key: node-role.kubernetes.io/master
-      operator: In
-      values:
-      - "true"
-    - {key: k3os.io/mode, operator: DoesNotExist}
-    - {key: k3s-upgrade, operator: NotIn, values: ["disabled", "false"]}
-    - key: kubernetes.io/arch
-      operator: In
-      values:
-      - "amd64"
-  serviceAccountName: system-upgrade
-  tolerations:
-  - key: "node-role.kubernetes.io/master"
-    operator: "Exists"
-  drain:
-    force: true
-  upgrade:
-    image: rancher/k3s-upgrade
-  channel: https://update.k3s.io/v1-release/channels/stable
----
 # Agent plan
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
@@ -39,7 +8,7 @@ metadata:
     k3s-upgrade: agent
 spec:
   concurrency: 1
-  channel: https://update.k3s.io/v1-release/channels/stable
+  channel: https://update.k3s.io/v1-release/channels/v1.31
   nodeSelector:
     matchExpressions:
       # - {key: k3s-upgrade, operator: Exists}
@@ -58,10 +27,8 @@ spec:
     - {key: kubernetes.io/arch, effect: NoSchedule, operator: Equal, value: arm}
     - {key: arm, operator: Exists}
 
-  prepare:
-    # Since v0.5.0-m1 SUC will use the resolved version of the plan for the tag on the prepare container.
-    # image: rancher/k3s-upgrade:v1.17.4-k3s1
-    image: rancher/k3s-upgrade
-    args: ["prepare", "k3s-server"]
+  # prepare:
+  #   image: rancher/k3s-upgrade
+  #   args: ["prepare", "k3s-server"]
   upgrade:
     image: rancher/k3s-upgrade
