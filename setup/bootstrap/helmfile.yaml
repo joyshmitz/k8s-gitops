@@ -17,7 +17,7 @@ releases:
   - name: prometheus-operator-crds
     namespace: monitoring
     chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
-    version: 20.0.1
+    version: 21.0.0
 
   - name: cilium
     namespace: kube-system
@@ -31,7 +31,7 @@ releases:
   - name: coredns
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
-    version: 1.42.2
+    version: 1.43.0
     values:
       - templates/coredns-values.yaml.gotmpl
     needs:
@@ -40,7 +40,7 @@ releases:
   - name: cert-manager
     namespace: cert-manager
     chart: jetstack/cert-manager
-    version: v1.17.2
+    version: v1.18.1
     values:
       - templates/cert-manager-values.yaml.gotmpl
     needs:
@@ -49,7 +49,7 @@ releases:
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-    version: 0.22.0
+    version: 0.23.0
     values:
       - templates/flux-operator-values.yaml.gotmpl
     needs:
@@ -58,7 +58,7 @@ releases:
   - name: flux-instance
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-    version: 0.22.0
+    version: 0.23.0
     wait: false
     values:
       - templates/flux-instance-values.yaml.gotmpl

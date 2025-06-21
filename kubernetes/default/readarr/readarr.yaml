@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 4.0.1
+      version: 4.1.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/readarr
-              tag: 0.4.16.2793
+              tag: 0.4.17.2801
             env:
               READARR__APP__INSTANCENAME: readarr
               READARR__APPLICATION_URL: 'https://radarr.eviljungle.com'

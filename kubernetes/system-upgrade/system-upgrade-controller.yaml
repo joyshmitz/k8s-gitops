@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 4.0.1
+      version: 4.1.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -62,12 +62,15 @@ spec:
                   - ALL
               seccompProfile:
                 type: RuntimeDefault
-        serviceAccount:
-          identifier: system-upgrade-controller
 
-
-    serviceAccount:
-      system-upgrade-controller: {}
+    rawResources:
+      talosServiceAccount:
+        apiVersion: talos.dev/v1alpha1
+        kind: ServiceAccount
+        spec:
+          spec:
+            roles:
+              - os:admin
 
     rbac:
       bindings:
@@ -79,11 +82,5 @@ spec:
           subjects:
             - identifier: system-upgrade-controller
 
-    rawResources:
-      talosServiceAccount:
-        apiVersion: talos.dev/v1alpha1
-        kind: ServiceAccount
-        spec:
-          spec:
-            roles:
-              - os:admin
+    serviceAccount:
+      system-upgrade-controller: {}

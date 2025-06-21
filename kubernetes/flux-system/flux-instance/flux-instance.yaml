@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: flux-instance
-      version: 0.22.0
+      version: 0.23.0
       sourceRef:
         kind: HelmRepository
         name: controlplaneio-fluxcd
@@ -27,7 +27,7 @@ spec:
     instance:
       distribution:
         # renovate: depName=controlplaneio-fluxcd/distribution datasource=github-releases
-        version: 2.6.1
+        version: 2.6.2
       cluster:
         networkPolicy: false
       components:

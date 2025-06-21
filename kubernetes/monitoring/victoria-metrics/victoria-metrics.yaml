@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: victoria-metrics-k8s-stack
-      version: 0.49.0
+      version: 0.52.0
       sourceRef:
         kind: HelmRepository
         name: victoriametrics-charts
@@ -101,17 +101,12 @@ spec:
           repeat_interval: 12h
           routes:
           - matchers:
-            - alertname=~"WatchDog|InfoInhibitor|KubeMemoryOvercommit|CephNodeNetworkPacketDrops|CephNodeNetworkPacketErrors|HostPhysicalComponentTooHot|HostNodeOvertemperatureAlarm"
+            - alertname=~"WatchDog|InfoInhibitor|KubeMemoryOvercommit|CephNodeNetworkPacketDrops|CephNodeNetworkPacketErrors"
             receiver: 'blackhole'
           - matchers:
             - severity=~"warning|critical"
             receiver: slack-notifications
         inhibit_rules:
-          # - source_matchers:
-          #     - severity = "critical"
-          #   target_matchers:
-          #     - severity = "warning"
-          #   equal: ["alertname", "namespace"]
           - source_matchers:
               - severity = "critical"
             target_matchers:
