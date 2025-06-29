@@ -3,30 +3,29 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: snapshot-controller
-  namespace: kube-system
+  name: silence-operator
+  namespace: monitoring
 spec:
-  interval: 15m
+  interval: 1h
   chart:
     spec:
-      chart: snapshot-controller
-      version: 4.1.0
+      chart: silence-operator
+      version: 0.16.1
       sourceRef:
         kind: HelmRepository
-        name: piraeus
+        name: giantswarm-charts
         namespace: flux-system
   install:
-    crds: CreateReplace
     remediation:
       retries: -1
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
+  timeout: 20m
   values:
-    controller:
-      serviceMonitor:
-        create: true
+    alertmanagerAddress: http://vmalertmanager-stack.monitoring.svc.cluster.local:9093
+    crds:
+      install: false
+    networkPolicy:
+      enabled: false
