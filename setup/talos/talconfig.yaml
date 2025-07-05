@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
 # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.10.3
+talosVersion: v1.10.4
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.33.1
+kubernetesVersion: v1.33.2
 
 clusterName: home
 endpoint: https://k8s-0:6443
@@ -54,6 +54,8 @@ nodes:
     ipAddress: 10.0.7.52
     installDiskSelector:
       model: Samsung SSD 970
+    extraManifests:
+      - ./manifests/e1000e-enp1s0.yaml
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: 00:02:c9:57:5c:a8
@@ -127,11 +129,12 @@ nodes:
     controlPlane: false
     ipAddress: 10.0.7.59
     installDisk: /dev/nvme0n1
+    extraManifests:
+      - ./manifests/e1000e-eno1.yaml
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: 98:fa:9b:04:47:b9 # formerly k3s-a
         dhcp: true
-
 
 # Global patches
 patches:

@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 4.0.1
+      version: 4.1.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: docker.io/rancher/system-upgrade-controller
-              tag: v0.15.2
+              tag: v0.15.3
             env:
               SYSTEM_UPGRADE_CONTROLLER_LEADER_ELECT: true
               SYSTEM_UPGRADE_CONTROLLER_NAME: system-upgrade-controller
@@ -62,12 +62,15 @@ spec:
                   - ALL
               seccompProfile:
                 type: RuntimeDefault
-        serviceAccount:
-          identifier: system-upgrade-controller
 
-
-    serviceAccount:
-      system-upgrade-controller: {}
+    rawResources:
+      talosServiceAccount:
+        apiVersion: talos.dev/v1alpha1
+        kind: ServiceAccount
+        spec:
+          spec:
+            roles:
+              - os:admin
 
     rbac:
       bindings:
@@ -79,11 +82,5 @@ spec:
           subjects:
             - identifier: system-upgrade-controller
 
-    rawResources:
-      talosServiceAccount:
-        apiVersion: talos.dev/v1alpha1
-        kind: ServiceAccount
-        spec:
-          spec:
-            roles:
-              - os:admin
+    serviceAccount:
+      system-upgrade-controller: {}
