@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 4.0.1
+      version: 4.1.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/zwave-js/zwave-js-ui
-              tag: 10.6.1@sha256:fe8166b41b7d808a2cb7b39d830db4cb5aaac0b70066552bc1fd4456fbdb3802
+              tag: 10.9.0@sha256:6db7cdfde1a037b5263e4434d0890619710772464ef72477d1be6c3c3c6b5419
             env:
               TZ: America/New_York
               PORT: &port 8091

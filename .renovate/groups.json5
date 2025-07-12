@@ -13,7 +13,7 @@
     },
     {
       "description": "System Upgrade Controller",
-      "matchDatasources": ["github-tags", "docker"],
+      "matchDatasources": ["docker", "github-releases", "helm", "git-tags"],
       "matchPackagePatterns": ["rancher/system-upgrade-controller"],
       "groupName": "system-upgrade-controller-suite",
       "additionalBranchPrefix": "",
@@ -114,6 +114,15 @@
       groupName: "Spegel",
       matchDatasources: ["docker"],
       matchPackageNames: ["/spegel/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
+      description: "Silence Operator Group",
+      groupName: "Silence Operator",
+      matchDatasources: ["docker", "github-releases", "helm", "git-tags"],
+      matchPackagePatterns: ["silence-operator", "giantswarm/silence-operator"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },

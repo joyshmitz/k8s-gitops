@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 4.0.1
+      version: 4.1.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-assistant/home-assistant
-              tag: 2025.5.3
+              tag: 2025.7.1
             env:
               TZ: "America/New_York"
               PYTHONPATH: "/config/deps"
@@ -68,7 +68,7 @@ spec:
           code-server:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.100.2@sha256:0c31654f1125c3a685a42ed1f2946573f5ebaaf016c5bc0640c72f9f571267e0
+              tag: 4.101.2@sha256:5f654c1137f8d87c8cf44253318bf94b85f6f9129e426a9956da46eb602dcc5a
             args:
               - --auth
               - none
@@ -158,9 +158,10 @@ spec:
 
     ingress:
       main:
-        # ensure that external DNS (cloudflare) has an entry for this directed to the router
-        # ensure that internal DNS for this zone (coredns) has an entry for this directed to nginx LB IP
         className: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/internal: "true"
+          external-dns.alpha.kubernetes.io/target: "10.0.6.150"
         hosts:
           - host: &host "hass.eviljungle.com"
             paths:
@@ -172,12 +173,16 @@ spec:
         tls:
           - hosts:
               - *host
-      tailscale:
-        className: "nginx-tailscale"
+      external:
+        className: "nginx"
+        annotations:
+          # External DNS for public access via Cloudflare  
+          external-dns.alpha.kubernetes.io/external: "true"
+          external-dns.alpha.kubernetes.io/target: "eviljungle.com"
         hosts:
           - host: &host "hass.eviljungle.com"
             paths:
-              - path: /
+              - path: /external-dns-only
                 pathType: Prefix
                 service:
                   identifier: main

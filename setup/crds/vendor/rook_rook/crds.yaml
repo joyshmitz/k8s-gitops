@@ -574,6 +574,7 @@ spec:
                       type: string
                     targetSizeRatio:
                       description: TargetSizeRatio gives a hint (%) to Ceph in terms of expected consumption of the total cluster capacity
+                      minimum: 0
                       type: number
                   required:
                     - size
@@ -1291,6 +1292,19 @@ spec:
                   x-kubernetes-preserve-unknown-fields: true
                 name:
                   type: string
+                removeSecret:
+                  description: |-
+                    RemoveSecret indicates whether the current secret for this ceph client should be removed or not.
+                    If true, the K8s secret will be deleted, but the cephx keyring will remain until the CR is deleted.
+                  type: boolean
+                secretName:
+                  description: |-
+                    SecretName is the name of the secret created for this ceph client.
+                    If not specified, the default name is "rook-ceph-client-" as a prefix to the CR name.
+                  type: string
+                  x-kubernetes-validations:
+                    - message: SecretName is immutable and cannot be changed
+                      rule: self == oldSelf
               required:
                 - caps
               type: object
@@ -1496,6 +1510,11 @@ spec:
                             - quick
                           type: string
                       type: object
+                    wipeDevicesFromOtherClusters:
+                      description: |-
+                        WipeDevicesFromOtherClusters wipes the OSD disks belonging to other clusters. This is useful in scenarios where ceph cluster
+                        was reinstalled but OSD disk still contains the metadata from previous ceph cluster.
+                      type: boolean
                   type: object
                 continueUpgradeAfterChecksEvenIfNotHealthy:
                   description: ContinueUpgradeAfterChecksEvenIfNotHealthy defines if an upgrade should continue even if PGs are not clean
@@ -1539,6 +1558,11 @@ spec:
                           description: Enables read affinity for CSI driver.
                           type: boolean
                       type: object
+                    skipUserCreation:
+                      description: |-
+                        SkipUserCreation determines whether CSI users and their associated secrets should be skipped.
+                        If set to true, the user must manually manage these secrets.
+                      type: boolean
                   type: object
                 dashboard:
                   description: Dashboard settings
@@ -2769,6 +2793,10 @@ spec:
                     exporter:
                       description: Ceph exporter configuration
                       properties:
+                        hostNetwork:
+                          description: Whether host networking is enabled for CephExporter. If not set, the network settings from CephCluster.spec.networking will be applied.
+                          nullable: true
+                          type: boolean
                         perfCountersPrioLimit:
                           default: 5
                           description: Only performance counters greater than or equal to this option are fetched
@@ -7362,6 +7390,7 @@ spec:
                             type: string
                           targetSizeRatio:
                             description: TargetSizeRatio gives a hint (%) to Ceph in terms of expected consumption of the total cluster capacity
+                            minimum: 0
                             type: number
                         required:
                           - size
@@ -7550,6 +7579,7 @@ spec:
                           type: string
                         targetSizeRatio:
                           description: TargetSizeRatio gives a hint (%) to Ceph in terms of expected consumption of the total cluster capacity
+                          minimum: 0
                           type: number
                       required:
                         - size
@@ -8888,7 +8918,6 @@ spec:
     plural: cephnfses
     shortNames:
       - nfs
-      - cephnfs
     singular: cephnfs
   scope: Namespaced
   versions:
@@ -11211,6 +11240,7 @@ spec:
                           type: string
                         targetSizeRatio:
                           description: TargetSizeRatio gives a hint (%) to Ceph in terms of expected consumption of the total cluster capacity
+                          minimum: 0
                           type: number
                       required:
                         - size
@@ -12811,6 +12841,7 @@ spec:
                           type: string
                         targetSizeRatio:
                           description: TargetSizeRatio gives a hint (%) to Ceph in terms of expected consumption of the total cluster capacity
+                          minimum: 0
                           type: number
                       required:
                         - size
@@ -13742,6 +13773,7 @@ spec:
                           type: string
                         targetSizeRatio:
                           description: TargetSizeRatio gives a hint (%) to Ceph in terms of expected consumption of the total cluster capacity
+                          minimum: 0
                           type: number
                       required:
                         - size
@@ -13925,6 +13957,7 @@ spec:
                           type: string
                         targetSizeRatio:
                           description: TargetSizeRatio gives a hint (%) to Ceph in terms of expected consumption of the total cluster capacity
+                          minimum: 0
                           type: number
                       required:
                         - size
